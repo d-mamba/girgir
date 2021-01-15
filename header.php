@@ -165,7 +165,7 @@ if (isset($_SESSION['userkullanici_mail'])) {
                                 <ul>
                                     <li><a href="index">Anasayfa</a></li>
                                     <li> <a href="about.htm">Şehir Seç</a></li>
-                                    <li><a href="404.php">Şehir Sesç</a></li>
+                                    <li><a href="404.php">Etkinlik Kur</a></li>
                                 </ul>
 
                             </nav>
