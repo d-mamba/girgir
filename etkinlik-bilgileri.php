@@ -6,8 +6,10 @@ if (!isset($_SESSION['userkullanici_mail'])) {
     header("Location:login");
     exit;
 }
-$etkinliksor = $db->prepare("SELECT * FROM etkinlik");
-$etkinliksor->execute();
+$etkinliksor = $db->prepare("SELECT * FROM etkinlik WHERE kullanici_id=:kullanici_id order by  etkinlik_tarih DESC");
+$etkinliksor->execute(array(
+    'kullanici_id' => $_SESSION['userkullanici_id']
+));
 ?>
 <!-- Header Area End Here -->
 <!-- Main Banner 1 Area Start Here -->
@@ -39,53 +41,51 @@ $etkinliksor->execute();
                 if (@$_GET['durum'] == "hata") { ?>
 
                     <div class="alert alert-danger">
-                        <strong>Hata!</strong>Güncelleme başarısız.
+                        <strong>Hata!</strong> Etkinlik Kaldırılamadı.
                     </div>
                 <?php } elseif (@$_GET['durum'] == "ok") { ?>
 
                     <div class="alert alert-success">
-                        <strong>Bilgi!</strong>Güncelleme başarılı.
+                        <strong>Bilgi! </strong> Etkinlik Kaldırıldı.
                     </div>
                 <?php }
                 ?>
-                <form action="nedmin/netting/kullanici.php" method="POST" class="form-horizontal" id="personal-info-form">
+                <form action="nedmin/netting/kullanici.php" method="POST" name="etkinlik_sil" class="form-horizontal" id="personal-info-form">
                     <div class="settings-details tab-content">
                         <div class="tab-pane fade active in" id="Personal">
                             <h2 class="title-section">Etkinliklerim</h2>
                             <div class="personal-info inner-page-padding">
-                                <div class="row featuredContainer">
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 joomla plugins component">
-                                        <div class="single-item-grid">
-                                            <div class="item-img">
-                                                <img src="img\product\12.jpg" alt="product" class="img-responsive">
-                                                <div class="trending-sign" data-tips="Trending"><i class="fa fa-bolt" aria-hidden="true"></i></div>
-                                            </div>
-                                            <div class="item-content">
-                                                <div class="item-info">
-                                                    <h3><a href="#">Team Component Pro</a></h3>
-                                                    <span>Joomla Component</span>
-                                                    <div class="price">$15</div>
-                                                </div>
-                                                <div class="item-profile">
-                                                    <div class="profile-title">
-                                                        <div class="img-wrapper"><img src="img\profile\1.jpg" alt="profile" class="img-responsive img-circle"></div>
-                                                        <span>PsdBosS</span>
-                                                    </div>
-                                                    <div class="profile-rating">
-                                                        <ul>
-                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                                            <li>(<span> 05</span> )</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Başlık</th>
+                                            <th scope="col">Tarih</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $say = 0;
+                                        while ($etkinlikcek = $etkinliksor->fetch(PDO::FETCH_ASSOC)) {
+                                            $say++ ?>
+
+                                                
+
+                                            <tr>
+                                                <th scope="row"><?php echo $say ?></th>
+                                                <td><?php echo $etkinlikcek['etkinlik_baslik'] ?></td>
+                                                <td><?php echo $etkinlikcek['etkinlik_tarih'] ?></td>
+                                                <td><input type="text" value="<?php echo $etkinlikcek['etkinlik_id'] ?>">
+                                                        
+                                                        <button class="btn btn-danger btn-xs" name="etkinlik_sil">Kaldır</button>
+                                                    </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+
+
                             </div>
                         </div>
 

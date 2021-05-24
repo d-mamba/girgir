@@ -116,15 +116,15 @@ if (isset($_POST['kullanicibilgiguncelle'])) {
 
     $kullaniciguncelle = $db->prepare("UPDATE kullanici SET 
     kullanici_ad=:kullanici_ad,
-    kullanici_soyad=:kullanici_soyad,
-    kullanici_foto=:kullanici_foto
+    kullanici_soyad=:kullanici_soyad
+    
     WHERE kullanici_id={$_SESSION['userkullanici_id']}");
 
     $update = $kullaniciguncelle->execute(array(
 
         'kullanici_ad' => htmlspecialchars($_POST['kullanici_ad']),
-        'kullanici_soyad' => htmlspecialchars($_POST['kullanici_soyad']),
-        'kullanici_foto' => htmlspecialchars($_POST['kullanici_foto'])
+        'kullanici_soyad' => htmlspecialchars($_POST['kullanici_soyad'])
+        
     ));
 
     if ($update) {
@@ -133,6 +133,8 @@ if (isset($_POST['kullanicibilgiguncelle'])) {
         Header("Location:../../hesabim?durum=hata");
     }
 }
+
+
 if (isset($_POST['kullanicisifreguncelle'])) {
 
     $kullanici_eskipassword = htmlspecialchars($_POST['kullanici_eskipassword']);
@@ -183,12 +185,13 @@ if (isset($_POST['kullanicisifreguncelle'])) {
 }
 
 
+/*
 if (isset($_POST['kullanicifotoekle'])) {
 
 
 
 
-    if ($_FILES['kullanici_foto']['size'] > 1048576) {
+    if ($_FILES['kullanici_foto']['size'] > 5242880) {
 
         echo "Bu dosya boyutu çok büyük";
 
@@ -211,10 +214,18 @@ if (isset($_POST['kullanicifotoekle'])) {
     @$tmp_name = $_FILES['kullanici_foto']["tmp_name"];
     @$name = $_FILES['kullanici_foto']["name"];
 
-   
+    include('SimpleImage.php');
+    $image = new SimpleImage();
+    $image ->load($tmp_name);
+    $image ->resize(128,128);
+    $image ->save($tmp_name);
+
+  
+
+
     $uploads_dir = '../../dimg/kullanicifoto';
 
-   
+
 
     $benzersizsayi4 = rand(20000, 32000);
     $refimgyol = substr($uploads_dir, 6) . "/" . $benzersizsayi4 . $name;
@@ -242,7 +253,7 @@ if (isset($_POST['kullanicifotoekle'])) {
         Header("Location:../../hesabim?durum=hata");
     }
 }
-
+*/
 // ETKİNLİK KUR 
 
 
@@ -252,7 +263,7 @@ if (isset($_POST['etkinlikkur'])) {
 
 
 
-    if ($_FILES['etkinlik_foto']['size'] > 1048576) {
+    if ($_FILES['etkinlik_foto']['size'] > 5242880) {
 
         echo "Bu dosya boyutu çok büyük";
 
@@ -272,24 +283,38 @@ if (isset($_POST['etkinlikkur'])) {
 
         exit;
     }
-
-
-    $uploads_dir = '../../dimg/etkinlikfoto';
+    
+    
 
     @$tmp_name = $_FILES['etkinlik_foto']["tmp_name"];
     @$name = $_FILES['etkinlik_foto']["name"];
+
+    
+
+    $uploads_dir = '../../dimg/etkinlikfoto';
 
     $benzersizsayi4 = rand(20000, 32000);
     $refimgyol = substr($uploads_dir, 6) . "/" . $benzersizsayi4 . $name;
 
     @move_uploaded_file($tmp_name, "$uploads_dir/$benzersizsayi4$name");
+    $ref=$_POST['ilce'];
+   
     
+    $ilcesor2= $db->prepare("SELECT * FROM ilce WHERE ilce_ad=:ilce_ad");
+    $ilcesor2->execute([
+        'ilce_ad'=>$ref
+    ]);
+        $row=$ilcesor2->fetch(PDO::FETCH_ASSOC);
+       
+        
 
+    
     $duzenle = $db->prepare("INSERT INTO etkinlik SET
         etkinlik_baslik=:etkinlik_baslik,
         etkinlik_foto=:etkinlik_foto,
         etkinlik_aciklama=:etkinlik_aciklama,
-        ilce_id=:ilce_id,
+        il_id=:il_id,
+        ilce_ad=:ilce_ad,
         etkinlik_adres=:etkinlik_adres,
         etkinlik_tarih=:etkinlik_tarih,
         kullanici_id=:kullanici_id
@@ -298,7 +323,8 @@ if (isset($_POST['etkinlikkur'])) {
         'etkinlik_foto' => $refimgyol,
         'etkinlik_baslik' => htmlspecialchars($_POST['etkinlik_baslik']),
         'etkinlik_aciklama' => htmlspecialchars($_POST['etkinlik_aciklama']),
-        'ilce_id' => htmlspecialchars($_POST['ilce_no']),
+        'il_id'=>htmlspecialchars($_POST['ilce_id']),
+        'ilce_ad' => htmlspecialchars($row['ilce_id']),
         'etkinlik_adres' => htmlspecialchars($_POST['etkinlik_adres']),
         'etkinlik_tarih' => htmlspecialchars($_POST['etkinlik_tarih']),
         'kullanici_id' => htmlspecialchars($_POST['kullanici_id'])
@@ -307,10 +333,148 @@ if (isset($_POST['etkinlikkur'])) {
 
 
     if ($insert) {
-        
+
         Header("Location:../../etkinlikkur?durum=ok");
     } else {
 
         Header("Location:../../etkinlikkur?durum=hata");
     }
+}
+
+if (isset($_POST['kullanicibilgiguncelle'])) {
+
+
+
+    $kullaniciguncelle = $db->prepare("UPDATE kullanici SET 
+    kullanici_ad=:kullanici_ad,
+    kullanici_soyad=:kullanici_soyad
+    
+    WHERE kullanici_id={$_SESSION['userkullanici_id']}");
+
+    $update = $kullaniciguncelle->execute(array(
+
+        'kullanici_ad' => htmlspecialchars($_POST['kullanici_ad']),
+        'kullanici_soyad' => htmlspecialchars($_POST['kullanici_soyad'])
+    ));
+
+    if ($update) {
+        Header("Location:../../hesabim?durum=ok");
+    } else {
+        Header("Location:../../hesabim?durum=hata");
+    }
+}
+
+if (isset($_POST['etkinlikgoruntule'])) {
+
+
+
+    $etkinliklerim = $db->prepare("SELECT * FROM etkinlik WHERE kullanici_id={$_SESSION['userkullanici_id']}");
+
+    $update = $etkinliklerim->execute(array(
+
+        'kullanici_ad' => htmlspecialchars($_POST['kullanici_ad']),
+        'kullanici_soyad' => htmlspecialchars($_POST['kullanici_soyad']),
+        'kullanici_foto' => htmlspecialchars($_POST['kullanici_foto'])
+    ));
+
+    if ($update) {
+        Header("Location:../../hesabim?durum=ok");
+    } else {
+        Header("Location:../../hesabim?durum=hata");
+    }
+}
+
+if (isset($_POST['kullanicifotoekle'])) {
+
+	
+	
+
+
+	
+	if ($_FILES['kullanici_foto']['size']>1048576) {
+		
+		echo "Bu dosya boyutu çok büyük";
+
+		Header("Location:../../hesabim?durum=dosyabuyuk");
+
+	}
+
+
+	$izinli_uzantilar=array('jpg','png');
+
+	//echo $_FILES['ayar_logo']["name"];
+
+	$ext=strtolower(substr($_FILES['kullanici_foto']["name"],strpos($_FILES['kullanici_foto']["name"],'.')+1));
+
+	if (in_array($ext, $izinli_uzantilar) === false) {
+		echo "Bu uzantı kabul edilmiyor";
+		Header("Location:../../hesabim?durum=formathata");
+
+		exit;
+	}
+
+
+	
+
+	@$tmp_name = $_FILES['kullanici_foto']["tmp_name"];
+	@$name = $_FILES['kullanici_foto']["name"];
+
+    
+
+    $uploads_dir = '../../dimg/kullanicifoto';
+
+	$uniq=uniqid();
+	$refimgyol=substr($uploads_dir, 6)."/".$uniq.".".$ext;
+
+	@move_uploaded_file($tmp_name, "$uploads_dir/$uniq.$ext");
+
+	
+	$duzenle=$db->prepare("UPDATE kullanici SET
+		kullanici_foto=:kullanici_foto
+		WHERE kullanici_id={$_SESSION['userkullanici_id']}");
+	$update=$duzenle->execute(array(
+		'kullanici_foto' => $refimgyol
+	));
+
+
+
+	if ($update) {
+
+		$resimsilunlink=$_POST['eski_yol'];
+		unlink("../../$resimsilunlink");
+
+		Header("Location:../../hesabim?durum=ok");
+
+	} else {
+
+		Header("Location:../../hesabim?durum=hata");
+	}
+
+
+    
+
+}
+
+
+
+if (isset($_POST['etkinlik_sil'])) {
+
+	
+	
+	$sil=$db->prepare("DELETE from etkinlik where etkinlik_id=:etkinlik_id");
+	$kontrol=$sil->execute(array(
+		'etkinlik_id' => $_POST['etkinlik_id']
+	));
+
+	if ($kontrol) {
+
+		
+
+		Header("Location:../../etkinlik-bilgileri.php?durum=ok");
+
+	} else {
+
+		Header("Location:../../etkinlik-bilgileri.php?durum=hata");
+	}
+
 }

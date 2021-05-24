@@ -38,7 +38,7 @@ if (!isset($_SESSION['userkullanici_mail'])) {
                 <form action="nedmin/netting/kullanici.php" method="POST" enctype="multipart/form-data" class="form-horizontal" id="personal-info-form">
                     <div class="settings-details tab-content">
                         <div class="tab-pane fade active in" id="Personal">
-                            <h2 class="title-section">Profil Düzenle</h2>
+                            <h2 class="title-section">Profil Resmi Düzenle</h2>
                             <div class="personal-info inner-page-padding">
                                 <?php
                                 if (@$_GET['durum'] == "hata") { ?>
@@ -63,10 +63,11 @@ if (!isset($_SESSION['userkullanici_mail'])) {
                                     </div>
                                 <?php }
                                 ?>
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Mevcut Resim</label>
                                     <div class="col-sm-3">
-                                        <img width="128" height="128" src="<?php echo $kullanicicek['kullanici_foto']; ?>">
+                                        <img src="<?php echo $kullanicicek['kullanici_foto']; ?>">
                                     </div>
                                 </div>
 
@@ -74,12 +75,28 @@ if (!isset($_SESSION['userkullanici_mail'])) {
                                     <label class="col-sm-3 control-label">Resim Seç ...</label>
                                     <div class="col-sm-6">
                                         <input class="form-control" required="" name="kullanici_foto" id="first-name" type="file">
-                                        <button class="update-btn" style="float: right;" name="kullanicifotoekle" id="login-update">Yükle</button>
 
                                     </div>
                                 </div>
 
+
                                 <input type="hidden" name="eski_yol" value="<?php echo $kullanicicek['kullanici_foto']; ?>">
+
+                                <div class="form-group">
+                                    <div class="col-sm-9">
+
+                                        <button class="update-btn" style="float: right;" name="kullanicifotoekle" id="login-update">Yükle</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form><br>
+                <form action="nedmin/netting/kullanici.php" method="POST" class="form-horizontal" id="personal-info-form">
+                    <div class="settings-details tab-content">
+                        <div class="tab-pane fade active in" id="Personal">
+                            <h2 class="title-section">Kullanıcı Bilgileri Düzenle</h2>
+                            <div class="personal-info inner-page-padding">
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Kullanıcı Adı</label>
@@ -98,12 +115,9 @@ if (!isset($_SESSION['userkullanici_mail'])) {
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">E-mail(Değiştirilemez..)</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" disabled="" ; value="<?php echo $kullanicicek['kullanici_mail'] ?>" id="company-name" type="text">
+                                        <input class="form-control" disabled="" value="<?php echo $kullanicicek['kullanici_mail'] ?>" id="company-name" type="text">
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="form-group">
 
@@ -112,12 +126,10 @@ if (!isset($_SESSION['userkullanici_mail'])) {
                                         <button class="update-btn" style="float: right;" name="kullanicibilgiguncelle" id="login-update">Güncelle</button>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-
-
                     </div>
-
                 </form>
             </div>
         </div>

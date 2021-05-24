@@ -1,7 +1,7 @@
   <!-- footer content -->
         <footer>
           <div class="pull-right">
-            JoyAkademi Eğitim Sürümü <a href="https://www.joyakademi.com">Joy Akademi</a>
+           
           </div>
           <div class="clearfix"></div>
         </footer>

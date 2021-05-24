@@ -23,6 +23,19 @@ if (isset($_SESSION['userkullanici_mail'])) {
         $_SESSION['userkullanici_id'] = $kullanicicek['kullanici_id'];
     }
 }
+if (isset($_SESSION['userkullanici_id'])) {
+    $kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_id=:id");
+    $kullanicisor->execute(array(
+        'id' => $_SESSION['userkullanici_id']
+    ));
+    $say = $kullanicisor->rowCount();
+    $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+
+    //Kullanıcı ID SESSİON ataması !!! 
+    if (!isset($_SESSION['userkullanici_id'])) {
+        $_SESSION['userkullanici_id'] = $kullanicicek['kullanici_id'];
+    }
+}
 
 ?>
 
@@ -127,7 +140,7 @@ if (isset($_SESSION['userkullanici_mail'])) {
                                             <div class="user-account-info">
                                                 <div class="user-account-info-controler">
                                                     <div class="user-account-img">
-                                                        <img height="32" width="32" style="border-radius: 30px;" class="img-responsive" src="<?php echo $kullanicicek['kullanici_foto'] ?>" alt="Profil resmi ">
+                                                        <img height="31" width="31" style="border-radius: 30px; border-color:red; border-width: 1px; border-style:solid" class="img-responsive" src="<?php echo $kullanicicek['kullanici_foto'] ?>" alt="Profil resmi ">
                                                     </div>
                                                     <div class="user-account-title">
                                                         <div class="user-account-name"><?php echo $kullanicicek['kullanici_ad'] . " " . substr($kullanicicek['kullanici_soyad'], 0, 1) ?></div>
@@ -164,8 +177,9 @@ if (isset($_SESSION['userkullanici_mail'])) {
                             <nav id="desktop-nav">
                                 <ul>
                                     <li><a href="index">Anasayfa</a></li>
-                                    <li> <a href="about.htm">Şehir Seç</a></li>
-                                    <li><a href="404.php">Etkinlik Kur</a></li>
+                                    <li> <a href="yapim.html" target="_blank">Şehir Seç</a></li>
+                                    <li><a href="etkinlikkur">Etkinlik Kur</a></li>
+                                    <li><a href="indexgelistirici.php">Hakkımızda</a></li>
                                 </ul>
 
                             </nav>

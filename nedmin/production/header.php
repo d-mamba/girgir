@@ -46,7 +46,7 @@ if (!isset($_SESSION['kullanici_mail'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Joy Akademi Php Eğitim Sürümü</title>
+  <title>GirGir Production</title>
 
   <!-- Bootstrap -->
   <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -88,7 +88,7 @@ if (!isset($_SESSION['kullanici_mail'])) {
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>GirGir Activity</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -146,21 +146,18 @@ if (!isset($_SESSION['kullanici_mail'])) {
                </ul>
              </li>
 
-             <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda </a></li>
-
              <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar </a></li>
 
-             <li><a href="urun.php"><i class="fa fa-shopping-basket"></i> Ürünler </a></li>
+           
 
              <li><a href="menu.php"><i class="fa fa-list"></i> Menüler </a></li>
 
-             <li><a href="kategori.php"><i class="fa fa-list"></i> Kategoriler </a></li>
 
-             <li><a href="slider.php"><i class="fa fa-image"></i> Slider </a></li>
+            
 
-             <li><a href="yorum.php"><i class="fa fa-comments"></i> Yorumlar </a></li>
              
-             <li><a href="banka.php"><i class="fa fa-bank"></i> Bankalar </a></li>
+             
+             
 
 
 
@@ -215,70 +212,7 @@ if (!isset($_SESSION['kullanici_mail'])) {
             </ul>
           </li>
 
-          <li role="presentation" class="dropdown">
-            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-              <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-green">6</span>
-            </a>
-            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                  <span>
-                    <span>John Smith</span>
-                    <span class="time">3 mins ago</span>
-                  </span>
-                  <span class="message">
-                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                  </span>
-                </a>
-              </li>
-              <li>
-                <div class="text-center">
-                  <a>
-                    <strong>See All Alerts</strong>
-                    <i class="fa fa-angle-right"></i>
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </li>
+          
         </ul>
       </nav>
     </div>

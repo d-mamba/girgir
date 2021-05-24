@@ -7,7 +7,7 @@ function islemkontrol () {
 
     if (!isset($_SESSION['kullanici_mail'])) {
         
-        Header("Location:404.php");
+        Header("yapim.html");
         exit;
     }
 }

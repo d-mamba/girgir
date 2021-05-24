@@ -1,6 +1,7 @@
 ﻿<?php
 
 require_once 'header.php';
+if (isset($_SESSION['userkullanici_mail'])) { 
 
 
 $ilsor = $db->prepare("SELECT * FROM il");
@@ -12,8 +13,10 @@ $ilcesor->execute();
 
 
 
+
+
 ?>
-<form action="nedmin/netting/kullanici.php" enctype="multipart/form-data" method="POST" class="form-horizontal" id="personal-info-form">
+<form action="nedmin/netting/kullanici.php" enctype="multipart/form-data" name="etkinlikkurr" method="POST" class="form-horizontal" id="personal-info-form">
     <div class="form-horizontal">
         <div class="container">
 
@@ -30,12 +33,12 @@ $ilcesor->execute();
                         if (@$_GET['durum'] == "hata") { ?>
 
                             <div class="alert alert-danger">
-                                <strong>Hata!</strong>Güncelleme başarısız.
+                                <strong>Hata!</strong>Etkinlik Kurulamadı.
                             </div>
                         <?php } elseif (@$_GET['durum'] == "ok") { ?>
 
                             <div class="alert alert-success">
-                                <strong>Bilgi!</strong>Güncelleme başarılı.
+                                <strong>Tebrikler!</strong>Etkinlik Kurdunuz.
                             </div>
                         <?php } elseif (@$_GET['durum'] == "dosyabuyuk") { ?>
 
@@ -83,7 +86,7 @@ $ilcesor->execute();
                                     while ($ilcek = $ilsor->fetch(PDO::FETCH_ASSOC)) {
 
                                     ?>
-                                        <option value="<?php echo $ilcek['il_id'] ?>"><?php echo $ilcek['il_ad'] ?>
+                                        <option value="<?php echo $ilcek['il_id'] ?>"><?php echo $ilcek['il_ad']; ?>
                                         <?php } ?>
 
                                 </select>
@@ -92,27 +95,35 @@ $ilcesor->execute();
 
 
 
+                        
                         <div class="form-group">
                             <label class="control-label col-sm-3" for="district">İlçe</label>
                             <div class="custom-select col-sm-3">
-                                <select required="" name="ilce_ad" id="ilce_id" class='select2'>
+                                <select required="" name="ilce_id" id="ilce_id" onchange="getValue($('#ilce_id option:selected').text());" class='select2'>
                                     <option value="">İlçe seçin...</option>
 
                                     <?php
                                     while ($ilcecek = $ilcesor->fetch(PDO::FETCH_ASSOC)) {
 
                                     ?>
-                                        <option value="<?php echo $ilcecek['il_id'] ?>"><?php echo $ilcecek['ilce_ad'] ?></option>
+                                        <option value="<?php echo $ilcecek['il_id'] ?>"><?php echo $ilcecek['ilce_ad']; ?></option>
                                         
-
+                                        
                                     <?php
 
-                                    } ?>
+                                    } ?><br>
+                                       <input type="hidden" name="ilce" id="ilce" class="form-control"></input>   
+                                       
                                 </select>   
                             </div>
                         </div>
-
-                        
+                       
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"></label>
+                            <div class="col-sm-6">
+                                     
+                            </div>
+                        </div>
 
 
                         <div class="form-group">
@@ -134,6 +145,8 @@ $ilcesor->execute();
                         </div>
                         <input type="hidden" name="il_id" value="">
                         <div class="form-group">
+                                    
+                            
 
                             <div class="col-sm-9">
 
@@ -150,11 +163,11 @@ $ilcesor->execute();
 </form>
 <!-- About Page End Here -->
 <!-- Footer Area Start Here -->
-<?php
+<?php 
 require_once 'footer.php'
 ?>
 <!-- Veritabanından cekilen selectbox id'leri için SCRİPT -->
-<script type="text/javascript">
+<script type="text/javascript">src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js">
     $(document).ready(function() {
         var $select1 = $('#il_id'),
             $select2 = $('#ilce_id'),
@@ -164,5 +177,27 @@ require_once 'footer.php'
             $select2.html($options.filter('[value="' + this.value + '"]'));
         }).trigger('change');
     });
+    
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var $select1 = $('#ilce_id'),
+            $select2 = $('#ilce'),
+            $options = $select2.find('option');
+
+        $select1.on('change', function() {
+            $select2.html($options.filter('[value="' + this.value + '"]'));
+        }).trigger('change');
+    });
+    
+</script>
+<script type="text/javascript">
+  function getValue(Text) {
+    $ref=Text;  										
+	$("#ilce").val($ref);    												
+    }
 </script>
 
+<?php } else {
+    header("Location:login");
+}?>
