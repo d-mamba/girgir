@@ -76,7 +76,7 @@ $etkinliksor->execute(array(
                                                 <th scope="row"><?php echo $say ?></th>
                                                 <td><?php echo $etkinlikcek['etkinlik_baslik'] ?></td>
                                                 <td><?php echo $etkinlikcek['etkinlik_tarih'] ?></td>
-                                                <td><input type="text" value="<?php echo $etkinlikcek['etkinlik_id'] ?>">
+                                                <td><input type="hidden" name="etkinlik_id" value="<?php echo $etkinlikcek['etkinlik_id'] ?>">
                                                         
                                                         <button class="btn btn-danger btn-xs" name="etkinlik_sil">Kaldır</button>
                                                     </td>

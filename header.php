@@ -177,7 +177,7 @@ if (isset($_SESSION['userkullanici_id'])) {
                             <nav id="desktop-nav">
                                 <ul>
                                     <li><a href="index">Anasayfa</a></li>
-                                    <li> <a href="yapim.html" target="_blank">Şehir Seç</a></li>
+                                    <li> <a href="sehir" >Şehir Seç</a></li>
                                     <li><a href="etkinlikkur">Etkinlik Kur</a></li>
                                     <li><a href="indexgelistirici.php">Hakkımızda</a></li>
                                 </ul>

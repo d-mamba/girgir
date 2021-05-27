@@ -32,6 +32,7 @@ if (isset($_SESSION['userkullanici_mail'])) {
 
                         <div role="tabpanel" class="tab-pane fade in active clear products-container" id="list-view">
                             <div class="product-list-view-style2">
+                                
                                 <?php while ($etkinlikler = $etkinliksor->fetch(PDO::FETCH_ASSOC)) { ?>
                                     <div class="single-item-list">
                                         <div class="item-img">
@@ -51,14 +52,35 @@ if (isset($_SESSION['userkullanici_mail'])) {
                                                 </div>
                                                 
                                                 <div class="item-sale-info">
-                                                    <div class="price">Şehir</div>
+                                                    <div class="price">
+                                                     <?php  
+                                                        $tut=$etkinlikler['il_id'];
+                                                        
+                                                         $SehirSor= $db->prepare("SELECT * FROM il WHERE il_id=:il_id");
+                                                         $SehirSor->execute([
+                                                            'il_id'=>$tut
+                                                               ]);
+                                                               $row=$SehirSor->fetch(PDO::FETCH_ASSOC);
+                                                                echo $row['il_ad'];
+                                                     ?></div>
                                                     <div class="sale-qty">Katılımcı(11)</div>
                                                 </div>
                                             </div>
                                             <div class="item-profile-list">
                                                 <div class="profile-title">
-                                                    <div class="img-wrapper"><img src="img\profile\2.jpg" alt="profile" class="img-responsive img-circle"><?php  $yayinlayan=$etkinlikler['kullanici_id']; ?></div>
-                                                    <span><?php echo $etkinlikler['kullanici_id'] ?></span>
+                                                    <div class="img-wrapper"><img src="img\profile\2.jpg" alt="profile" class="img-responsive img-circle"></div>
+                                                    <span><?php 
+                                                           
+                                                            $tut1=$etkinlikler['kullanici_id'] ;
+                                                        
+                                                            $yayinlayan= $db->prepare("SELECT * FROM kullanici WHERE kullanici_id=:kullanici_id");
+                                                            $yayinlayan->execute([
+                                                               'kullanici_id'=>$tut1
+                                                                  ]);
+                                                                  $row1=$yayinlayan->fetch(PDO::FETCH_ASSOC);
+                                                                   echo $row1['kullanici_ad']." ".$row1['kullanici_soyad'];
+                                                                   
+                                                           ?></span>
                                                     
                                                 </div>
                                                 <button class="btn btn-success btn-xs">Etkinliğe Katıl</button>
@@ -73,7 +95,8 @@ if (isset($_SESSION['userkullanici_mail'])) {
                 </div>
             </div>
         </div>
-        <?php require_once 'footer.php' ?>
+        <?php require_once 'footer.php'
+        ?>
     <?php } else {
     header("Location:login");
 } ?>

@@ -459,17 +459,17 @@ if (isset($_POST['kullanicifotoekle'])) {
 
 if (isset($_POST['etkinlik_sil'])) {
 
-	
+	$row=$_POST['etkinlik_id'];
 	
 	$sil=$db->prepare("DELETE from etkinlik where etkinlik_id=:etkinlik_id");
 	$kontrol=$sil->execute(array(
-		'etkinlik_id' => $_POST['etkinlik_id']
+		'etkinlik_id' => $row
 	));
 
 	if ($kontrol) {
 
 		
-
+        
 		Header("Location:../../etkinlik-bilgileri.php?durum=ok");
 
 	} else {
